@@ -47,4 +47,4 @@ app.use(require('./routes/user').routes());
 app.use(require('./routes/authorize').routes());
 app.use(require('./routes/token').routes());
 
-app.listen(48906);
+app.listen(3000);
