@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
 const sequelize = new Sequelize('test_oauth2', 'test', '123456', {
-    host: 'mysql.walfud.com',
+    host: 'mysql',
     dialect: 'mysql',
     // logging: false,
 
