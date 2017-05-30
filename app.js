@@ -44,6 +44,7 @@ app.use(async (cxt, next) => {
 app.use(require('./routes/index').routes());
 app.use(require('./routes/login').routes());
 app.use(require('./routes/user').routes());
+app.use(require('./routes/app').routes());
 app.use(require('./routes/authorize').routes());
 app.use(require('./routes/token').routes());
 
