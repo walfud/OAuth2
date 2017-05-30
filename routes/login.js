@@ -18,7 +18,7 @@ const router = new Router();
  * 
  * Res:
  * 200
- * {access_token: string, refresh_token: string}
+ * { oid: string, access_token: string, refresh_token: string}
  */
 router.post('/login', async (cxt, next) => {
   const { username, password } = cxt.request.body;
@@ -48,6 +48,7 @@ router.post('/login', async (cxt, next) => {
       }, { transaction: t });
 
       responseBody = {
+        oid: newToken.oid,
         access_token: newToken.access_token,
         refresh_token: newToken.refresh_token,
       }
@@ -73,6 +74,7 @@ router.post('/login', async (cxt, next) => {
     });
 
     responseBody = {
+      oid: token.oid,
       access_token: token.access_token,
       refresh_token: token.refresh_token,
     };
