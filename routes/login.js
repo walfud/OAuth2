@@ -18,7 +18,12 @@ const router = new Router();
  * 
  * Res:
  * 200
- * { oid: string, access_token: string, refresh_token: string}
+ * { 
+ *  access_token: string, 
+ *  refresh_token: string
+ *  expires_in: long,
+ *  token_type: string,
+ * }
  */
 router.post('/login', async (cxt, next) => {
   const { username, password } = cxt.request.body;
@@ -48,7 +53,6 @@ router.post('/login', async (cxt, next) => {
       }, { transaction: t });
 
       responseBody = {
-        oid: newToken.oid,
         access_token: newToken.access_token,
         refresh_token: newToken.refresh_token,
       }
@@ -74,7 +78,6 @@ router.post('/login', async (cxt, next) => {
     });
 
     responseBody = {
-      oid: token.oid,
       access_token: token.access_token,
       refresh_token: token.refresh_token,
     };
@@ -82,7 +85,11 @@ router.post('/login', async (cxt, next) => {
     console.log(`login: user(${util.inspect(user.get({ plain: true }))}), token(${util.inspect(token.get({ plain: true }))})`);
   }
 
-  cxt.body = responseBody;
+  cxt.body = {
+    ...responseBody,
+    expires_in: 3600,
+    token_type: "bearer",
+  };
 });
 
 module.exports = router;
