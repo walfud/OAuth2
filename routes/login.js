@@ -86,7 +86,8 @@ router.post('/login', async (cxt, next) => {
   }
 
   cxt.body = {
-    ...responseBody,
+    access_token: responseBody.access_token,
+    refresh_token: responseBody.refresh_token,
     expires_in: 3600,
     token_type: "bearer",
   };
