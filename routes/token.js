@@ -37,7 +37,7 @@ router.post('/token', async (cxt, next) => {
   } = cxt.request.body;
 
   if (grantType != 'authorization_code') {
-    ctx.status = 400;
+    cxt.status = 400;
     cxt.body = {
       err: `WRONG grant_type: ${grantType}`,
     }
@@ -50,7 +50,7 @@ router.post('/token', async (cxt, next) => {
       code,
     }
   }) == 0) {
-    ctx.status = 400;
+    cxt.status = 400;
     cxt.body = {
       err: `No such code: ${code}`,
     };
