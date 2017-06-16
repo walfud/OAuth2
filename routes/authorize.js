@@ -42,6 +42,7 @@ router.get('/authorize', async (cxt, next) => {
 
   // 验证 response_type
   if (responseType != 'code') {
+    cxt.status = 400;
     cxt.body = {
       err: `WRONG response_type: ${responseType}`,
     }

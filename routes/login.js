@@ -62,6 +62,7 @@ router.post('/login', async (cxt, next) => {
   } else {
     // Login
     if (user.password != password) {
+      ctx.status = 400;
       cxt.body = {
         err: `WRONG password`,
       }
