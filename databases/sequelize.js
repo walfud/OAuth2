@@ -6,7 +6,7 @@ const sequelize = new Sequelize(process.env.MYSQL_DATABASE, process.env.MYSQL_US
     // logging: false,
 
     define: {
-        engine: 'MYISAM',
+        engine: 'InnoDB',
         timestamps: false,
         underscored: true,
         freezeTableName: true,
@@ -17,5 +17,4 @@ const sequelize = new Sequelize(process.env.MYSQL_DATABASE, process.env.MYSQL_US
 module.exports = {
     Sequelize,
     sequelize,
-    NAME_TYPE: Sequelize.STRING(64),
 };

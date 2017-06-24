@@ -3,7 +3,12 @@ const logger = require('koa-logger')
 const bodyParser = require('koa-bodyparser');
 const Router = require('koa-router');
 
-const Token = require('./databases/Token');
+const {
+    User,
+    App,
+    Token,
+    Code,
+ } = require('./databases/db');
 
 const app = new Koa();
 
@@ -12,31 +17,38 @@ app.use(bodyParser());
 
 // token 验证
 app.use(async (cxt, next) => {
-    if (cxt.request.url != '/login') {
+    if (cxt.request.url != '/'
+        && cxt.request.url != '/login') {
         const { 'x-access-token': accessToken } = cxt.request.header;
-        const token = await Token.findOne({
+        const userAppToken = await Token.findOne({
             where: {
                 access_token: accessToken,
-            }
+            },
+            include: [User, App],
         });
-        if (!token) {
-            const err = `WRONG token access: ${accessToken}`;
-            console.warn(err);
+        if (!userAppToken) {
+            console.warn(`WRONG token access: ${accessToken}`);
+            cxt.status = 401;
             cxt.body = {
-                err,
+                err: `WRONG token access: ${accessToken}`
             }
             return;
         }
 
         // 如果验证通过， 则增加一个
         cxt.request.oauth2 = {
-            username: token.user_name,
-            appName: token.app_name,
-            
-            oid: token.oid,
-            accessToken: token.access_token,
-            refreshToken: token.refresh_token,
+            userId: userAppToken.user.id,
+            username: userAppToken.user.name,
+
+            appId: userAppToken.app.id,
+            appName: userAppToken.app.name,
+            redirectUri: userAppToken.app.redirect_uri,
+
+            oid: userAppToken.oid,
+            accessToken: userAppToken.access_token,
+            refreshToken: userAppToken.refresh_token,
         }
+        console.log(cxt.request.oauth2);
     }
     await next();
 })

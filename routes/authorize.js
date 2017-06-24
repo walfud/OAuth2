@@ -2,12 +2,11 @@ const Router = require('koa-router');
 const uuidV4 = require('uuid/v4');
 
 const {
-  sequelize,
-} = require('../databases/sequelize');
-const User = require('../databases/User');
-const App = require('../databases/App');
-const Code = require('../databases/Code');
-const Token = require('../databases/Token');
+    User,
+  App,
+  Token,
+  Code,
+ } = require('../databases/db');
 
 const router = new Router();
 
@@ -15,7 +14,7 @@ const router = new Router();
  * Req:
  * GET /authorize
  * header:
- * x-token
+ * x-access-token
  * ------
  * response_type: string
  * client_id: string
@@ -31,11 +30,11 @@ const router = new Router();
  * }
  */
 router.get('/authorize', async (cxt, next) => {
-  const { username } = cxt.request.oauth2;
+  const { userId } = cxt.request.oauth2;
   const {
     response_type: responseType,
     client_id: appName,
-    redirect_uri: redirectUri,
+    // redirect_uri: redirectUri,
     scope: scope,
     state: state,
   } = cxt.request.query;
@@ -49,17 +48,17 @@ router.get('/authorize', async (cxt, next) => {
     return;
   }
 
-  const code = uuidV4();
-  await Code.upsert({
-    user_name: username,
-    app_name: appName,
-    code,
-  });
-
   const app = await App.findOne({
     where: {
       name: appName,
     }
+  });
+
+  const code = uuidV4();
+  await Code.upsert({
+    user_id: userId,
+    app_id: app.id,
+    code,
   });
 
   cxt.body = {

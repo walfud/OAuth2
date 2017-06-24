@@ -1,21 +1,26 @@
 const {
     Sequelize,
     sequelize,
-    NAME_TYPE,
  } = require('./sequelize');
 const Token = require('./Token');
 
 const App = sequelize.define('app', {
-    name: {
-        type: NAME_TYPE, 
+    id: {
+        type: Sequelize.BIGINT,
         primaryKey: true,
     },
-    redirect_uri: { 
-        type: Sequelize.STRING, 
-        allowNull: false, 
-    }, 
+
+    name: {
+        type: Sequelize.STRING,
+        allowNull: false,
+    },
+    redirect_uri: {
+        type: Sequelize.STRING,
+        allowNull: false,
+    },
 });
 
-App.NAME_OAUTH2 = 'oauth2';
+App.OAUTH2_ID = 1;
+App.OAUTH2_NAME = 'oauth2';
 
 module.exports = App;

@@ -13,7 +13,7 @@ const router = new Router();
  * Req:
  * GET /app
  * header: 
- * x-token: string
+ * x-access-token: string
  * 
  * Res:
  * 200

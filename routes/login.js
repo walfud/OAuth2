@@ -44,8 +44,8 @@ router.post('/login', async (cxt, next) => {
         password,
       }, { transaction: t });
       const newToken = await Token.create({
-        user_name: newUser.name,
-        app_name: App.NAME_OAUTH2,
+        user_id: newUser.id,
+        app_id: App.OAUTH2_ID,
 
         oid: uuidV4(),
         access_token: uuidV4(),
@@ -62,7 +62,7 @@ router.post('/login', async (cxt, next) => {
   } else {
     // Login
     if (user.password != password) {
-      cxt.status = 400;
+      cxt.status = 401;
       cxt.body = {
         err: `WRONG password`,
       }
@@ -72,8 +72,8 @@ router.post('/login', async (cxt, next) => {
     let token = await Token.findOne({
       where: {
         $and: {
-          user_name: user.name,
-          app_name: App.NAME_OAUTH2,
+          user_id: user.id,
+          app_id: App.OAUTH2_ID,
         }
       }
     });

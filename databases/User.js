@@ -1,14 +1,18 @@
 const {
     Sequelize,
     sequelize,
-    NAME_TYPE,
  } = require('./sequelize');
 const Token = require('./Token');
 
 const User = sequelize.define('user', {
-    name: {
-        type: NAME_TYPE, 
+    id: {
+        type: Sequelize.BIGINT,
         primaryKey: true,
+    },
+    
+    name: {
+        type: Sequelize.STRING,
+        allowNull: false,
     },
     password: {
         type: Sequelize.STRING,

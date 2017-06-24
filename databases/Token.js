@@ -1,32 +1,27 @@
 const {
     Sequelize,
     sequelize,
-    NAME_TYPE,
  } = require('./sequelize');
 const User = require('./User');
 const App = require('./App');
 
 const Token = sequelize.define('token', {
-    user_name: {
-        type: NAME_TYPE,
-        allowNull: false,
-        references: {
-            model: User,
-            key: 'name',
-        }
+    id: {
+        type: Sequelize.BIGINT,
+        primaryKey: true,
     },
-    app_name: {
-        type: NAME_TYPE,
+    user_id: {
+        type: Sequelize.BIGINT,
         allowNull: false,
-        references: {
-            model: App,
-            key: 'name',
-        }
+    },
+    app_id: {
+        type: Sequelize.BIGINT,
+        allowNull: false,
     },
 
     oid: {
-        type: NAME_TYPE,
-        primaryKey: true,
+        type: Sequelize.STRING,
+        allowNull: false,
     },
     access_token: {
         type: Sequelize.STRING,

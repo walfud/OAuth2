@@ -28,7 +28,7 @@ const router = new Router();
  * }
  */
 router.post('/token', async (cxt, next) => {
-  const { username } = cxt.request.oauth2;
+  const { userId, } = cxt.request.oauth2;
   const {
     grant_type: grantType,
     client_id: appName,
@@ -50,7 +50,7 @@ router.post('/token', async (cxt, next) => {
       code,
     }
   }) == 0) {
-    cxt.status = 400;
+    cxt.status = 401;
     cxt.body = {
       err: `No such code: ${code}`,
     };
@@ -60,11 +60,17 @@ router.post('/token', async (cxt, next) => {
   // (重新)生成 token
   let token;
   await sequelize.transaction(async function (t) {
+    const app = await App.findOne({
+      where: {
+        name: appName,
+      }
+    });
+
     token = await Token.findOne({
       where: {
         $and: {
-          user_name: username,
-          app_name: appName,
+          user_id: userId,
+          app_id: app.id,
         }
       }
     }, { transaction: t });
@@ -76,8 +82,8 @@ router.post('/token', async (cxt, next) => {
       }, { transaction: t });
     } else {
       token = await Token.create({
-        user_name: username,
-        app_name: appName,
+        user_id: userId,
+        app_id: app.id,
         oid: uuidV4(),
         access_token: uuidV4(),
         refresh_token: uuidV4(),
