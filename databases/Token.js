@@ -9,6 +9,7 @@ const Token = sequelize.define('token', {
     id: {
         type: Sequelize.BIGINT,
         primaryKey: true,
+        autoIncrement: true,
     },
     user_id: {
         type: Sequelize.BIGINT,

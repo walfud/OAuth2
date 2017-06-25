@@ -35,7 +35,8 @@ CREATE TABLE code(
     PRIMARY KEY (`id`),
     FOREIGN KEY (user_id) REFERENCES user(id),
     FOREIGN KEY (app_id) REFERENCES app(id),
-    UNIQUE KEY `compositeIndex` (`user_id`, `app_id`)
+    UNIQUE KEY `index_user_id_app_id` (`user_id`, `app_id`),
+    INDEX `index_code` (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 CREATE TABLE token(
@@ -51,7 +52,8 @@ CREATE TABLE token(
     PRIMARY KEY (`id`),
     FOREIGN KEY (user_id) REFERENCES user(id),
     FOREIGN KEY (app_id) REFERENCES app(id),
-    UNIQUE KEY `compositeIndex` (`user_id`, `app_id`)
+    UNIQUE KEY `index_user_id_app_id` (`user_id`, `app_id`),
+    INDEX `index_access_token` (`access_token`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- Initial Data

@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "test": "mocha"
   },
   "dependencies": {
     "koa": "^2.2.0",
@@ -14,5 +15,10 @@
     "mysql": "^2.13.0",
     "sequelize": "^3.30.4",
     "uuid": "^3.0.1"
+  },
+  "devDependencies": {
+    "fetch-node": "0.0.1",
+    "mocha": "^3.4.2",
+    "supertest": "^3.0.0"
   }
 }

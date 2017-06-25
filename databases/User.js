@@ -8,6 +8,7 @@ const User = sequelize.define('user', {
     id: {
         type: Sequelize.BIGINT,
         primaryKey: true,
+        autoIncrement: true,
     },
     
     name: {

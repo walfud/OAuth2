@@ -9,6 +9,7 @@ const Code = sequelize.define('code', {
     id: {
         type: Sequelize.BIGINT,
         primaryKey: true,
+        autoIncrement: true,
     },
     user_id: {
         type: Sequelize.BIGINT,

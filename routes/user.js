@@ -2,10 +2,11 @@ const Router = require('koa-router');
 
 const {
   sequelize,
-} = require('../databases/sequelize');
-const User = require('../databases/User');
-const App = require('../databases/App');
-const Token = require('../databases/Token');
+  User,
+  App,
+  Token,
+  Code,
+ } = require('../databases/db');
 
 const router = new Router();
 

@@ -60,4 +60,6 @@ app.use(require('./routes/app').routes());
 app.use(require('./routes/authorize').routes());
 app.use(require('./routes/token').routes());
 
-app.listen(3000);
+const server = app.listen(3000);
+
+module.exports = server

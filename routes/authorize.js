@@ -2,7 +2,8 @@ const Router = require('koa-router');
 const uuidV4 = require('uuid/v4');
 
 const {
-    User,
+  sequelize,
+  User,
   App,
   Token,
   Code,

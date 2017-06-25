@@ -3,11 +3,11 @@ const uuidV4 = require('uuid/v4');
 
 const {
   sequelize,
-} = require('../databases/sequelize');
-const User = require('../databases/User');
-const App = require('../databases/App');
-const Code = require('../databases/Code');
-const Token = require('../databases/Token');
+  User,
+  App,
+  Token,
+  Code,
+ } = require('../databases/db');
 
 const router = new Router();
 

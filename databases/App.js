@@ -8,6 +8,7 @@ const App = sequelize.define('app', {
     id: {
         type: Sequelize.BIGINT,
         primaryKey: true,
+        autoIncrement: true,
     },
 
     name: {
