@@ -5,21 +5,21 @@ const {
 const User = require('./User');
 const App = require('./App');
 
-const Code = sequelize.define('code', {
+const Code = sequelize.define('Code', {
     id: {
         type: Sequelize.BIGINT,
         primaryKey: true,
         autoIncrement: true,
     },
-    user_id: {
+    userId: {
         type: Sequelize.BIGINT,
         allowNull: false,
-        unique: 'compositeIndex',
+        unique: 'indexUserIdAppId',
     },
-    app_id: {
+    appId: {
         type: Sequelize.BIGINT,
         allowNull: false,
-        unique: 'compositeIndex',
+        unique: 'indexUserIdAppId',
     },
 
     code: {

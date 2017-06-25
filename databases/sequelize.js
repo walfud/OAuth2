@@ -8,8 +8,6 @@ const sequelize = new Sequelize(process.env.MYSQL_DATABASE, process.env.MYSQL_US
     define: {
         engine: 'InnoDB',
         timestamps: false,
-        underscored: true,
-        freezeTableName: true,
     }
 });
 

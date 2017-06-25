@@ -46,19 +46,19 @@ describe('/login', function () {
                 token = await Token.findOne({
                     where: {
                         $and: {
-                            user_id: user.id,
-                            app_id: App.OAUTH2_ID,
+                            userId: user.id,
+                            appId: App.OAUTH2_ID,
                         }
                     }
                 });
                 assert(token);
                 assert(/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(token.oid));
-                assert(/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(token.access_token));
-                assert(/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(token.refresh_token));
+                assert(/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(token.accessToken));
+                assert(/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(token.refreshToken));
 
                 // Response
-                assert(response.body.access_token == token.access_token);
-                assert(response.body.refresh_token == token.refresh_token);
+                assert(response.body.access_token == token.accessToken);
+                assert(response.body.refresh_token == token.refreshToken);
                 assert(response.body.expires_in == 3600);
                 assert(response.body.token_type == 'bearer');
             });
@@ -75,8 +75,8 @@ describe('/login', function () {
             .expect('content-type', 'application/json; charset=utf-8')
             .then(async function (response) {
                 // Response
-                assert(response.body.access_token == token.access_token);
-                assert(response.body.refresh_token == token.refresh_token);
+                assert(response.body.access_token == token.accessToken);
+                assert(response.body.refresh_token == token.refreshToken);
                 assert(response.body.expires_in == 3600);
                 assert(response.body.token_type == 'bearer');
             });

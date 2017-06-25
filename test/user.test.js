@@ -19,19 +19,19 @@ describe('/user', function () {
             password: uuidV4(),
         });
         token = await Token.create({
-            user_id: user.id,
-            app_id: 1,
+            userId: user.id,
+            appId: 1,
 
             oid: uuidV4(),
-            access_token: uuidV4(),
-            refresh_token: uuidV4(),
+            accessToken: uuidV4(),
+            refreshToken: uuidV4(),
         });
     });
 
     it('Success', function () {
         return request(server)
             .get('/user')
-            .set('x-access-token', token.access_token)
+            .set('x-access-token', token.accessToken)
             .expect(200)
             .expect('content-type', 'application/json; charset=utf-8')
             .then(async function (response) {

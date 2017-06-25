@@ -4,8 +4,8 @@ const App = require('./App');
 const Token = require('./Token');
 const Code = require('./Code');
 
-Token.belongsTo(User, { foreignKey: 'user_id' });
-Token.belongsTo(App, { foreignKey: 'app_id' });
+Token.belongsTo(User, { foreignKey: 'userId' });
+Token.belongsTo(App, { foreignKey: 'appId' });
 
 module.exports = {
     sequelize,

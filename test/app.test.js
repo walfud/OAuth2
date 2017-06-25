@@ -21,28 +21,28 @@ describe('/app', function () {
         app = await App.create({
             name: uuidV4(),
             password: uuidV4(),
-            redirect_uri: 'http://test.walfud.com',
+            redirectUri: 'http://test.walfud.com',
         });
         token = await Token.create({
-            user_id: user.id,
-            app_id: app.id,
+            userId: user.id,
+            appId: app.id,
 
             oid: uuidV4(),
-            access_token: uuidV4(),
-            refresh_token: uuidV4(),
+            accessToken: uuidV4(),
+            refreshToken: uuidV4(),
         });
     });
 
     it('Success', function () {
         return request(server)
             .get('/app')
-            .set('x-access-token', token.access_token)
+            .set('x-access-token', token.accessToken)
             .expect(200)
             .expect('content-type', 'application/json; charset=utf-8')
             .then(async function (response) {
                 assert(response.body.oid == token.oid);
                 assert(response.body.name == app.name);
-                assert(response.body.redirect_uri == app.redirect_uri);
+                assert(response.body.redirect_uri == app.redirectUri);
             });
     });
 

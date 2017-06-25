@@ -44,21 +44,22 @@ router.post('/login', async (cxt, next) => {
         name: username,
         password,
       }, { transaction: t });
+console.log(newUser.get())
       const newToken = await Token.create({
-        user_id: newUser.id,
-        app_id: App.OAUTH2_ID,
+        userId: newUser.id,
+        appId: App.OAUTH2_ID,
 
         oid: uuidV4(),
-        access_token: uuidV4(),
-        refresh_token: uuidV4(),
+        accessToken: uuidV4(),
+        refreshToken: uuidV4(),
       }, { transaction: t });
 
       responseBody = {
-        access_token: newToken.access_token,
-        refresh_token: newToken.refresh_token,
+        accessToken: newToken.accessToken,
+        refreshToken: newToken.refreshToken,
       }
 
-      console.log(`register: user(${util.inspect(newUser.get({ plain: true }))}), token(${util.inspect(newToken.get({ plain: true }))})`);
+      console.log(`register: user(${util.inspect(newUser.get())}), token(${util.inspect(newToken.get())})`);
     });
   } else {
     // Login
@@ -73,23 +74,23 @@ router.post('/login', async (cxt, next) => {
     let token = await Token.findOne({
       where: {
         $and: {
-          user_id: user.id,
-          app_id: App.OAUTH2_ID,
+          userId: user.id,
+          appId: App.OAUTH2_ID,
         }
       }
     });
 
     responseBody = {
-      access_token: token.access_token,
-      refresh_token: token.refresh_token,
+      accessToken: token.accessToken,
+      refreshToken: token.refreshToken,
     };
 
-    console.log(`login: user(${util.inspect(user.get({ plain: true }))}), token(${util.inspect(token.get({ plain: true }))})`);
+    console.log(`login: user(${util.inspect(user.get())}), token(${util.inspect(token.get())})`);
   }
 
   cxt.body = {
-    access_token: responseBody.access_token,
-    refresh_token: responseBody.refresh_token,
+    access_token: responseBody.accessToken,
+    refresh_token: responseBody.refreshToken,
     expires_in: 3600,
     token_type: "bearer",
   };

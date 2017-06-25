@@ -69,31 +69,31 @@ router.post('/token', async (cxt, next) => {
     token = await Token.findOne({
       where: {
         $and: {
-          user_id: userId,
-          app_id: app.id,
+          userId,
+          appId: app.id,
         }
       }
     }, { transaction: t });
 
     if (token) {
       await token.update({
-        access_token: uuidV4(),
-        refresh_token: uuidV4(),
+        accessToken: uuidV4(),
+        refreshToken: uuidV4(),
       }, { transaction: t });
     } else {
       token = await Token.create({
-        user_id: userId,
-        app_id: app.id,
+        userId,
+        appId: app.id,
         oid: uuidV4(),
-        access_token: uuidV4(),
-        refresh_token: uuidV4(),
+        accessToken: uuidV4(),
+        refreshToken: uuidV4(),
       }, { transaction: t });
     }
   });
 
   cxt.body = {
-    access_token: token.access_token,
-    refresh_token: token.refresh_token,
+    access_token: token.accessToken,
+    refresh_token: token.refreshToken,
     expires_in: 3600,
     token_type: "bearer",
   };

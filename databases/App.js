@@ -4,7 +4,7 @@ const {
  } = require('./sequelize');
 const Token = require('./Token');
 
-const App = sequelize.define('app', {
+const App = sequelize.define('App', {
     id: {
         type: Sequelize.BIGINT,
         primaryKey: true,
@@ -15,7 +15,7 @@ const App = sequelize.define('app', {
         type: Sequelize.STRING,
         allowNull: false,
     },
-    redirect_uri: {
+    redirectUri: {
         type: Sequelize.STRING,
         allowNull: false,
     },

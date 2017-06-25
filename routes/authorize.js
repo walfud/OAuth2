@@ -35,7 +35,6 @@ router.get('/authorize', async (cxt, next) => {
   const {
     response_type: responseType,
     client_id: appName,
-    // redirect_uri: redirectUri,
     scope: scope,
     state: state,
   } = cxt.request.query;
@@ -57,15 +56,15 @@ router.get('/authorize', async (cxt, next) => {
 
   const code = uuidV4();
   await Code.upsert({
-    user_id: userId,
-    app_id: app.id,
+    userId,
+    appId: app.id,
     code,
   });
 
   cxt.body = {
     code,
     state,
-    cb: app.redirect_uri,
+    cb: app.redirectUri,
   };
 });
 

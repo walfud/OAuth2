@@ -5,30 +5,32 @@ const {
 const User = require('./User');
 const App = require('./App');
 
-const Token = sequelize.define('token', {
+const Token = sequelize.define('Token', {
     id: {
         type: Sequelize.BIGINT,
         primaryKey: true,
         autoIncrement: true,
     },
-    user_id: {
+    userId: {
         type: Sequelize.BIGINT,
         allowNull: false,
+        unique: 'indexUserIdAppId',
     },
-    app_id: {
+    appId: {
         type: Sequelize.BIGINT,
         allowNull: false,
+        unique: 'indexUserIdAppId',
     },
 
     oid: {
         type: Sequelize.STRING,
         allowNull: false,
     },
-    access_token: {
+    accessToken: {
         type: Sequelize.STRING,
         allowNull: false,
     },
-    refresh_token: {
+    refreshToken: {
         type: Sequelize.STRING,
         allowNull: false,
     },

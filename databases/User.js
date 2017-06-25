@@ -4,7 +4,7 @@ const {
  } = require('./sequelize');
 const Token = require('./Token');
 
-const User = sequelize.define('user', {
+const User = sequelize.define('User', {
     id: {
         type: Sequelize.BIGINT,
         primaryKey: true,

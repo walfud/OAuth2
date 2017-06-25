@@ -1,82 +1,82 @@
 -- Clear
-DROP DATABASE IF EXISTS test_oauth2;
-CREATE DATABASE test_oauth2;
-USE test_oauth2;
+DROP DATABASE IF EXISTS TestOauth2;
+CREATE DATABASE TestOauth2;
+USE TestOauth2;
 
 -- Table
-CREATE TABLE user(
+CREATE TABLE Users(
     id BIGINT AUTO_INCREMENT,
     name VARCHAR(64) NOT NULL,
     password VARCHAR(64) NOT NULL,
 
     --
     PRIMARY KEY (`id`),
-    INDEX `index_name` (`name`)
+    INDEX `indexName` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-CREATE TABLE app(
+CREATE TABLE Apps(
     id BIGINT AUTO_INCREMENT,
     name VARCHAR(64) NOT NULL,
-    redirect_uri VARCHAR(64),
+    redirectUri VARCHAR(64),
 
     --
     PRIMARY KEY (`id`),
-    INDEX `index_name` (`name`)
+    INDEX `indexName` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-CREATE TABLE code(
+CREATE TABLE Codes(
     id BIGINT AUTO_INCREMENT,
-    user_id BIGINT NOT NULL,
-    app_id BIGINT NOT NULL,
+    userId BIGINT NOT NULL,
+    appId BIGINT NOT NULL,
 
     code CHAR(36) NOT NULL,
 
     -- 
     PRIMARY KEY (`id`),
-    FOREIGN KEY (user_id) REFERENCES user(id),
-    FOREIGN KEY (app_id) REFERENCES app(id),
-    UNIQUE KEY `index_user_id_app_id` (`user_id`, `app_id`),
-    INDEX `index_code` (`code`)
+    FOREIGN KEY (userId) REFERENCES Users(id),
+    FOREIGN KEY (appId) REFERENCES Apps(id),
+    UNIQUE KEY `indexUserIdAppId` (`userId`, `appId`),
+    INDEX `indexCode` (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-CREATE TABLE token(
+CREATE TABLE Tokens(
     id BIGINT AUTO_INCREMENT,
-    user_id BIGINT NOT NULL,
-    app_id BIGINT NOT NULL,
+    userId BIGINT NOT NULL,
+    appId BIGINT NOT NULL,
 
     oid CHAR(36) NOT NULL,
-    access_token CHAR(36) NOT NULL,
-    refresh_token CHAR(36) NOT NULL,
+    accessToken CHAR(36) NOT NULL,
+    refreshToken CHAR(36) NOT NULL,
 
     --
     PRIMARY KEY (`id`),
-    FOREIGN KEY (user_id) REFERENCES user(id),
-    FOREIGN KEY (app_id) REFERENCES app(id),
-    UNIQUE KEY `index_user_id_app_id` (`user_id`, `app_id`),
-    INDEX `index_access_token` (`access_token`)
+    FOREIGN KEY (userId) REFERENCES Users(id),
+    FOREIGN KEY (appId) REFERENCES Apps(id),
+    UNIQUE KEY `indexUserIdAppId` (`userId`, `appId`),
+    INDEX `indexAccessToken` (`accessToken`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- Initial Data
-INSERT INTO app values(
+INSERT INTO Apps values(
     1, 
     'oauth2',
     NULL
 );
 
 -- Test Data
-INSERT INTO user values(
+INSERT INTO Users values(
     1,
     'test', 
     'e10adc3949ba59abbe56e057f20f883e'      -- 123456
 );
 
-INSERT INTO app values(
+INSERT INTO Apps values(
     2, 
     'contactsync',
     'http://contactsync.walfud.com/cb'
 );
 
-INSERT INTO code values(
+INSERT INTO Codes values(
     1,
     1,                                      -- test
     2,                                      -- contactsync
@@ -84,7 +84,7 @@ INSERT INTO code values(
     '2b4db34a-7f7d-47cc-b349-cffbb3c192a9'
 );
 
-INSERT INTO token values(
+INSERT INTO Tokens values(
     1,
     1,                                      -- test
     1,                                      -- oauth2

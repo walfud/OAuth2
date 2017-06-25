@@ -22,7 +22,7 @@ app.use(async (cxt, next) => {
         const { 'x-access-token': accessToken } = cxt.request.header;
         const userAppToken = await Token.findOne({
             where: {
-                access_token: accessToken,
+                accessToken,
             },
             include: [User, App],
         });
@@ -37,12 +37,12 @@ app.use(async (cxt, next) => {
 
         // 如果验证通过， 则增加一个
         cxt.request.oauth2 = {
-            userId: userAppToken.user.id,
-            username: userAppToken.user.name,
+            userId: userAppToken.User.id,
+            username: userAppToken.User.name,
 
-            appId: userAppToken.app.id,
-            appName: userAppToken.app.name,
-            redirectUri: userAppToken.app.redirect_uri,
+            appId: userAppToken.App.id,
+            appName: userAppToken.App.name,
+            redirectUri: userAppToken.App.redirectUri,
 
             oid: userAppToken.oid,
             accessToken: userAppToken.access_token,
