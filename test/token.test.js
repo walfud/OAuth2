@@ -70,9 +70,9 @@ describe('/token', function() {
     });
 
     after(async function() {
-        // await appToken.destroy();
-        // await token.destroy();
-        // await user.destroy();
-        // await app.destroy();
+        await appToken.destroy();
+        await token.destroy();
+        await user.destroy();
+        await app.destroy();
     });
 });
