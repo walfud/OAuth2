@@ -18,12 +18,12 @@ const router = new Router();
  * 
  * Res:
  * 200
- * {oid: string, username: string}
+ * { oid: string, name: string }
  */
 router.get('/user', async (cxt, next) => {
   cxt.body = {
     oid: cxt.request.oauth2.oid,
-    username: cxt.request.oauth2.username,
+    name: cxt.request.oauth2.username,
   };
 });
 

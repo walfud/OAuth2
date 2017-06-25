@@ -13,21 +13,12 @@ const {
 let username, password;
 let user, token;
 
-describe.only('/login', function () {
+describe('/login', function () {
     before(async function () {
-        while (true) {
-            username = uuidV4();
-            if (!await User.findOne({
-                where: {
-                    name: username,
-                }
-            })) {
-                break;
-            }
-        }
+        username = uuidV4();
         password = uuidV4();
     });
-    
+
     it('Register', function () {
         return request(server)
             .post('/login')
@@ -61,15 +52,15 @@ describe.only('/login', function () {
                     }
                 });
                 assert(token);
-                assert(/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(token.oid))
-                assert(/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(token.access_token))
-                assert(/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(token.refresh_token))
+                assert(/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(token.oid));
+                assert(/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(token.access_token));
+                assert(/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(token.refresh_token));
 
                 // Response
-                assert(response.body.access_token == token.access_token)
-                assert(response.body.refresh_token == token.refresh_token)
-                assert(response.body.expires_in == 3600)
-                assert(response.body.token_type == 'bearer')
+                assert(response.body.access_token == token.access_token);
+                assert(response.body.refresh_token == token.refresh_token);
+                assert(response.body.expires_in == 3600);
+                assert(response.body.token_type == 'bearer');
             });
     });
     it('Login', function () {
@@ -84,10 +75,25 @@ describe.only('/login', function () {
             .expect('content-type', 'application/json; charset=utf-8')
             .then(async function (response) {
                 // Response
-                assert(response.body.access_token == token.access_token)
-                assert(response.body.refresh_token == token.refresh_token)
-                assert(response.body.expires_in == 3600)
-                assert(response.body.token_type == 'bearer')
+                assert(response.body.access_token == token.access_token);
+                assert(response.body.refresh_token == token.refresh_token);
+                assert(response.body.expires_in == 3600);
+                assert(response.body.token_type == 'bearer');
+            });
+    });
+    it('Login Fail', function () {
+        return request(server)
+            .post('/login')
+            .set('Accept', 'application/json')
+            .send({
+                username,
+                password: '',
+            })
+            .expect(401)
+            .expect('content-type', 'application/json; charset=utf-8')
+            .then(async function (response) {
+                // Response
+                assert(response.body.err);
             });
     });
 

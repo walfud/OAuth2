@@ -18,12 +18,13 @@ const router = new Router();
  * 
  * Res:
  * 200
- * {oid: string, app_name: string}
+ * { oid: string, name: string, redirect_uri: string? }
  */
 router.get('/app', async (cxt, next) => {
   cxt.body = {
     oid: cxt.request.oauth2.oid,
-    app_name: cxt.request.oauth2.appName,
+    name: cxt.request.oauth2.appName,
+    redirect_uri: cxt.request.oauth2.redirectUri,
   };
 });
 
