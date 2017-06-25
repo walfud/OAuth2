@@ -4,4 +4,4 @@
 `docker-compose up`
 
 ### Test
-`docker-compose -f test.yml up`
+`docker-compose run node npm test`
