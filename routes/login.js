@@ -28,8 +28,6 @@ const router = new Router();
  */
 router.post('/login', async (cxt, next) => {
   const { username, password } = cxt.request.body;
-  console.log(cxt.request.body);
-
   let responseBody = {};
 
   const user = await User.findOne({

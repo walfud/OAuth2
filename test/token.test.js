@@ -42,6 +42,7 @@ describe('/token', function() {
     it('Success', function() {
         return request(server)
             .post('/token')
+            .set('content-type', 'application/x-www-form-urlencoded')
             .set('x-access-token', token.accessToken)
             .send(`grant_type=authorization_code&client_id=${app.name}&redirect_uri=&code=${code.code}`)
             .expect(200)
