@@ -21,7 +21,7 @@ describe('/app', function () {
         app = await App.create({
             name: uuidV4(),
             password: uuidV4(),
-            redirectUri: 'http://test.walfud.com',
+            redirectUri: 'http://oauth2.walfud.com/cb',
         });
         token = await Token.create({
             userId: user.id,

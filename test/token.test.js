@@ -29,7 +29,7 @@ describe('/token', function() {
         app = await App.create({
             name: uuidV4(),
             password: uuidV4(),
-            redirectUri: 'http://test.walfud.com',
+            redirectUri: 'http://oauth2.walfud.com/cb',
         });
         code = await Code.create({
             userId: user.id,
