@@ -20,13 +20,13 @@ app.use(async (cxt, next) => {
     if (cxt.request.url != '/'
         && cxt.request.url != '/login') {
         const { 'x-access-token': accessToken } = cxt.request.header;
-        const userAppToken = await Token.findOne({
+        const token = await Token.findOne({
             where: {
                 accessToken,
             },
             include: [User, App],
         });
-        if (!userAppToken) {
+        if (!token) {
             console.warn(`WRONG token access: ${accessToken}`);
             cxt.status = 401;
             cxt.body = {
@@ -37,16 +37,16 @@ app.use(async (cxt, next) => {
 
         // 如果验证通过， 则增加一个
         cxt.request.oauth2 = {
-            userId: userAppToken.User.id,
-            username: userAppToken.User.name,
+            userId: token.User.id,
+            username: token.User.name,
 
-            appId: userAppToken.App.id,
-            appName: userAppToken.App.name,
-            redirectUri: userAppToken.App.redirectUri,
+            appId: token.App.id,
+            appName: token.App.name,
+            redirectUri: token.App.redirectUri,
 
-            oid: userAppToken.oid,
-            accessToken: userAppToken.access_token,
-            refreshToken: userAppToken.refresh_token,
+            oid: token.oid,
+            accessToken: token.accessToken,
+            refreshToken: token.refreshToken,
         }
         console.log(cxt.request.oauth2);
     }
