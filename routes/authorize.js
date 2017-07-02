@@ -61,7 +61,6 @@ router.get('/authorize', async (cxt, next) => {
   });
 
   cxt.redirect(`${app.redirectUri}?${querystring.stringify({ code, state })}`)
-  cxt.type = 'application/x-www-form-urlencoded'
 });
 
 module.exports = router;

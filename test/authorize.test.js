@@ -40,7 +40,7 @@ describe('/authorize', function () {
             .get(`/authorize?response_type=code&client_id=${app.name}&redirect_uri=&scope=&state=`)
             .set('x-access-token', token.accessToken)
             .expect(302)
-            .expect('content-type', 'application/x-www-form-urlencoded')
+            .expect('content-type', 'text/html; charset=utf-8')
             .then(async function (response) {
                 // Db
                 code = await Code.findOne({
