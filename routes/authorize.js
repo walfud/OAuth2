@@ -1,5 +1,6 @@
 const Router = require('koa-router');
 const uuidV4 = require('uuid/v4');
+const querystring = require('querystring');
 
 const {
   sequelize,
@@ -24,14 +25,12 @@ const router = new Router();
  * state: string?
  * 
  * Res:
- * {
- *  code: string
- *  state: string
- *  cb: string    资源服务器辅助认证地址
- * }
+ * status: 302
+ * content-type: application/x-www-form-urlencoded
+ * location: [redirect_uri]?code=[string]&state=[string]
  */
 router.get('/authorize', async (cxt, next) => {
-  const { userId } = cxt.request.oauth2;
+  const { userId, redirectUri } = cxt.request.oauth2;
   const {
     response_type: responseType,
     client_id: appName,
@@ -61,11 +60,8 @@ router.get('/authorize', async (cxt, next) => {
     code,
   });
 
-  cxt.body = {
-    code,
-    state,
-    cb: app.redirectUri,
-  };
+  cxt.redirect(`${app.redirectUri}?${querystring.stringify({ code, state })}`)
+  cxt.type = 'application/x-www-form-urlencoded'
 });
 
 module.exports = router;

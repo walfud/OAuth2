@@ -1,6 +1,8 @@
 const assert = require('assert');
 const request = require('supertest');
 const uuidV4 = require('uuid/v4');
+const querystring = require('querystring');
+
 const server = require('../app')
 const {
   sequelize,
@@ -37,8 +39,8 @@ describe('/authorize', function () {
         return request(server)
             .get(`/authorize?response_type=code&client_id=${app.name}&redirect_uri=&scope=&state=`)
             .set('x-access-token', token.accessToken)
-            .expect(200)
-            .expect('content-type', 'application/json; charset=utf-8')
+            .expect(302)
+            .expect('content-type', 'application/x-www-form-urlencoded')
             .then(async function (response) {
                 // Db
                 code = await Code.findOne({
@@ -53,16 +55,14 @@ describe('/authorize', function () {
                 assert(code.code)
 
                 // Response
-                assert(response.body.code == code.code);
-                assert(!response.body.state);
-                assert(response.body.cb == app.redirectUri);
+                assert(response.header.location == `${app.redirectUri}?${querystring.stringify({ code: code.code, state: '' })}`);
             });
     });
 
     after(async function () {
-        await token.destroy();
-        await code.destroy();
-        await user.destroy();
-        await app.destroy();
+        if (token) await token.destroy();
+        if (code) await code.destroy();
+        if (user) await user.destroy();
+        if (app) await app.destroy();
     });
 });

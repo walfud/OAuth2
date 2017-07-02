@@ -41,7 +41,7 @@ describe('/user', function () {
     });
 
     after(async function() {
-        await token.destroy();
-        await user.destroy();
+        if (token) await token.destroy();
+        if (user) await user.destroy();
     });
 });
