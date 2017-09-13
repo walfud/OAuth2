@@ -15,6 +15,9 @@ const router = new Router();
 /**
  * Req:
  * POST /login
+ * header:
+ * Content-Type: application/json
+ * ------
  * {username: string, password: string}
  * 
  * Res:
